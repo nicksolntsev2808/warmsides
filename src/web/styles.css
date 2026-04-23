@@ -1,0 +1,378 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&family=Nunito:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Warmsides brand */
+  --color-ws-cream: #FDF6EE;
+  --color-ws-beige: #F0E6D3;
+  --color-ws-terracotta: #C9603A;
+  --color-ws-terracotta-dark: #A84D2C;
+  --color-ws-orange-soft: #E8895A;
+  --color-ws-brown: #4A2E1A;
+  --color-ws-text: #5C3D2E;
+  --color-ws-muted: #9E7A65;
+  --color-ws-white: #FFFAF5;
+  --color-ws-dark: #2C1A0E;
+}
+
+:root {
+  --radius: 0.75rem;
+  --background: #FDF6EE;
+  --foreground: #4A2E1A;
+  --card: #FFFAF5;
+  --card-foreground: #4A2E1A;
+  --popover: #FFFAF5;
+  --popover-foreground: #4A2E1A;
+  --primary: #C9603A;
+  --primary-foreground: #FFFAF5;
+  --secondary: #F0E6D3;
+  --secondary-foreground: #4A2E1A;
+  --muted: #F0E6D3;
+  --muted-foreground: #9E7A65;
+  --accent: #E8895A;
+  --accent-foreground: #4A2E1A;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: #E8D5C0;
+  --input: #E8D5C0;
+  --ring: #C9603A;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Nunito', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    color: #4A2E1A;
+  }
+}
+
+/* Scroll animations */
+.fade-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-up-delay-1 { transition-delay: 0.1s; }
+.fade-up-delay-2 { transition-delay: 0.2s; }
+.fade-up-delay-3 { transition-delay: 0.3s; }
+.fade-up-delay-4 { transition-delay: 0.4s; }
+
+/* Nav */
+.ws-nav {
+  background: #FFFAF5;
+  border-bottom: 1px solid #E8D5C0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+
+/* Buttons */
+.btn-primary {
+  background: #C9603A;
+  color: #FFFAF5;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  padding: 0.875rem 2rem;
+  border-radius: 0.625rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1rem;
+}
+.btn-primary:hover {
+  background: #A84D2C;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201, 96, 58, 0.35);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #C9603A;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  padding: 0.875rem 2rem;
+  border-radius: 0.625rem;
+  border: 2px solid #C9603A;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1rem;
+}
+.btn-outline:hover {
+  background: #C9603A;
+  color: #FFFAF5;
+  transform: translateY(-2px);
+}
+
+/* Cards */
+.ws-card {
+  background: #FFFAF5;
+  border-radius: 1.25rem;
+  border: 1px solid #E8D5C0;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.ws-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(74, 46, 26, 0.12);
+}
+
+/* Decorative blob */
+.ws-blob {
+  border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+}
+
+/* Form inputs */
+.ws-input {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border: 1.5px solid #E8D5C0;
+  border-radius: 0.625rem;
+  background: #FFFAF5;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  color: #4A2E1A;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+.ws-input:focus {
+  border-color: #C9603A;
+  box-shadow: 0 0 0 3px rgba(201, 96, 58, 0.15);
+}
+.ws-input::placeholder {
+  color: #9E7A65;
+}
+
+/* Nav links */
+.nav-link {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  color: #5C3D2E;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #C9603A;
+  transition: width 0.25s ease;
+}
+.nav-link:hover {
+  color: #C9603A;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+.nav-link.active {
+  color: #C9603A;
+}
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Footer */
+.ws-footer {
+  background: #2C1A0E;
+  color: #F0E6D3;
+}
+
+/* Section spacing */
+.ws-section {
+  padding: 6rem 0;
+}
+.ws-section-sm {
+  padding: 4rem 0;
+}
+
+/* Container */
+.ws-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Nav desktop links */
+.nav-links-desktop {
+  display: flex;
+}
+
+/* Mobile menu */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 0.25rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.mobile-menu span {
+  width: 24px;
+  height: 2px;
+  background: #4A2E1A;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu {
+    display: flex;
+  }
+  .nav-links-desktop {
+    display: none !important;
+  }
+  .ws-section {
+    padding: 4rem 0;
+  }
+
+  /* Container */
+  .ws-container {
+    padding: 0 1rem;
+  }
+
+  /* Cards */
+  .ws-card {
+    padding: 1.5rem 1.25rem !important;
+  }
+
+  /* Stat numbers */
+  .stat-number {
+    font-size: 2.25rem;
+  }
+
+  /* Hero CTA buttons — stack vertically */
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero-cta-group .btn-primary,
+  .hero-cta-group .btn-outline {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Why-us grid — force single column */
+  .why-us-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+  }
+
+  /* Hero section padding */
+  .hero-section {
+    padding: 4rem 0 3rem !important;
+  }
+
+  /* Bottom CTA sections */
+  .ws-bottom-cta {
+    padding: 3.5rem 0 !important;
+  }
+
+  /* Services / contacts gap reductions */
+  .services-grid {
+    gap: 2rem !important;
+  }
+  .contacts-grid {
+    gap: 2rem !important;
+  }
+  .story-grid {
+    gap: 2rem !important;
+  }
+
+  /* Footer */
+  .ws-footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  .ws-footer-bottom {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 0.5rem !important;
+  }
+  .ws-footer .ws-container {
+    padding: 2.5rem 1.25rem 1.5rem !important;
+  }
+
+  /* Nav dropdown */
+  .mobile-dropdown {
+    background: #FFFAF5;
+    border-radius: 0.75rem;
+    padding: 1.25rem 1rem;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Gradient text */
+.ws-gradient-text {
+  background: linear-gradient(135deg, #C9603A, #E8895A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Tag/badge */
+.ws-tag {
+  display: inline-block;
+  background: #F0E6D3;
+  color: #C9603A;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.375rem 0.875rem;
+  border-radius: 2rem;
+}
+
+/* Stats */
+.stat-number {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 800;
+  font-size: 3rem;
+  color: #C9603A;
+  line-height: 1;
+}
