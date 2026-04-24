@@ -48,9 +48,25 @@ export default function Contacts() {
     ev.preventDefault();
     if (!validate()) return;
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1000));
-    setLoading(false);
-    setSubmitted(true);
+    try {
+      const body = new URLSearchParams({
+        "form-name": "contact",
+        name: form.name,
+        contact: form.contact,
+        service: form.service,
+        comment: form.comment,
+      });
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body.toString(),
+      });
+      setSubmitted(true);
+    } catch {
+      alert("Ошибка отправки, попробуйте ещё раз.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (field: keyof FormData, value: string) => {
@@ -127,7 +143,8 @@ export default function Contacts() {
                       </button>
                     </div>
                   ) : (
-                    <form onSubmit={handleSubmit} noValidate>
+                    <form onSubmit={handleSubmit} noValidate name="contact" data-netlify="true">
+                      <input type="hidden" name="form-name" value="contact" />
                       {/* Name */}
                       <div style={{ marginBottom: "1.5rem" }}>
                         <label style={{
@@ -143,6 +160,7 @@ export default function Contacts() {
                         <input
                           className="ws-input"
                           type="text"
+                          name="name"
                           placeholder={tr.contacts.placeholderName}
                           value={form.name}
                           onChange={(e) => handleChange("name", e.target.value)}
@@ -168,6 +186,7 @@ export default function Contacts() {
                         <input
                           className="ws-input"
                           type="text"
+                          name="contact"
                           placeholder={tr.contacts.placeholderContact}
                           value={form.contact}
                           onChange={(e) => handleChange("contact", e.target.value)}
@@ -192,6 +211,7 @@ export default function Contacts() {
                         </label>
                         <select
                           className="ws-input"
+                          name="service"
                           value={form.service}
                           onChange={(e) => handleChange("service", e.target.value)}
                           style={{ borderColor: errors.service ? "#C9603A" : undefined, cursor: "pointer" }}
@@ -222,6 +242,7 @@ export default function Contacts() {
                         </label>
                         <textarea
                           className="ws-input"
+                          name="comment"
                           rows={4}
                           placeholder={tr.contacts.placeholderComment}
                           value={form.comment}
